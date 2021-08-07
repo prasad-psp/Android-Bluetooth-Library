@@ -1,0 +1,3 @@
+include ':bluetoothlibrary'
+include ':app'
+rootProject.name = "Android-Bluetooth-Library"

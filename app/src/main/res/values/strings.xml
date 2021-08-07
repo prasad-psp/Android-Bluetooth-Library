@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Android-Bluetooth-Library</string>
+    <string name="turn_on">TURN ON</string>
+    <string name="turn_off">TURN OFF</string>
+    <string name="scan_devices">SCAN DEVICES</string>
+    <string name="available_devices">AVAILABLE DEVICES</string>
+    <string name="paired_devices">PAIRED DEVICES</string>
+    <string name="connect_client">Connect / Client</string>
+    <string name="accept_server">Accept / Server</string>
+    <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="type_message">type message</string>
+    <string name="send">send</string>
+    <string name="send_receive">Send Receive</string>
+    <string name="send_receive_button_desc">You also want to send or receive data in another activity so please click on send receive button</string>
+    <string name="listen">Listen</string>
+</resources>
