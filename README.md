@@ -10,7 +10,7 @@ This is a Android bluetooth client server library for communication any device v
 - Detect nearby bluetooth devices. 
 - Get bluetooth discovery started or finished.
 - Pair bluetooth device and list of paired devices.
-- Unpair bluetooth device ( using reflaction ).
+- Unpair bluetooth device (using reflaction).
 
 **Connection** class provides the following features :
 - Set your own UUID for connection.
@@ -22,8 +22,8 @@ This is a Android bluetooth client server library for communication any device v
 - Disconnect bluetooth connection.
 
 **SendReceive** class provides the following features:
-- Send data to connected device ( using one or more classes / Activites / Fragments ).
-- Receive data from connected device ( using one or more classes / Activities / Fragments ).
+- Send data to connected device (using one or more classes / Activites / Fragments).
+- Receive data from connected device (using one or more classes / Activities / Fragments).
 
 
 
