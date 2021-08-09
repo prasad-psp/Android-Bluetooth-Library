@@ -44,6 +44,7 @@ dependencies {
 ```
 
 ### Bluetooth
+
 Add this in your manifest file
 ```java
 <uses-permission android:name="android.permission.BLUETOOTH" />
