@@ -28,7 +28,7 @@ This is a Android bluetooth client server library for communication any device v
 
 ## Quick start
 Add JitPack to your root build.gradle at the end of repositories:
-```xml
+```java
 allprojects {
     repositories {
         maven { url 'https://jitpack.io' }
@@ -37,7 +37,7 @@ allprojects {
 ```
 
 Add the dependency in your module build.gradle:
-```xml
+```java
 dependencies {
   implementation 'com.github.prasad-psp:Android-Bluetooth-Library:1.0.1'
 }
