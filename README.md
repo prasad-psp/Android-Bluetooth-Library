@@ -27,7 +27,7 @@ This is a Android bluetooth client server library for communication any device v
 
 ## Quick start
 Add JitPack to your root build.gradle at the end of repositories:
-```java
+```javascript
 allprojects {
     repositories {
         maven { url 'https://jitpack.io' }
@@ -36,7 +36,7 @@ allprojects {
 ```
 
 Add the dependency in your module build.gradle:
-```android
+```javascript
 dependencies {
   implementation 'com.github.prasad-psp:Android-Bluetooth-Library:1.0.1'
 }
@@ -44,7 +44,7 @@ dependencies {
 
 ### Bluetooth
 Add this in your manifest file
-```android
+```javascript
 <uses-permission android:name="android.permission.BLUETOOTH" />
 <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
