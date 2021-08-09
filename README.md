@@ -192,8 +192,7 @@ private final BluetoothListener.onConnectionListener connectionListener = new Bl
 
             case Connection.DISCONNECTED: {
                 Log.d(TAG,"Disconnected");
-		 // make sure call after detect bluetooth device 		
-                disconnected   
+		 // make sure call after detect bluetooth device disconnected   
 		 connection.disconnect();
                 break;
             }
@@ -242,8 +241,7 @@ private final BluetoothListener.onConnectionListener connectionListener = new Bl
             }
 	     case Connection.DISCONNECTED: {
                 Log.d(TAG,"Disconnected");
-	        // make sure call after detect bluetooth device 		
-               disconnected
+	        // make sure call after detect bluetooth device disconnected
 		connection.disconnect();
 	       break;
             }
@@ -338,12 +336,14 @@ SendReceive.getInstance().setOnReceiveListener(new BluetoothListener.onReceiveLi
 ```
 
 #### Complete example
-See the [sample project.] (https://github.com/prasad-psp/Android-Bluetooth-Library/tree/master/app/src/main/java/com/psp/android_bluetooth_library)
+See the [sample project.](https://github.com/prasad-psp/Android-Bluetooth-Library/tree/master/app/src/main/java/com/psp/android_bluetooth_library)
 
 ## Licence
+```
 MIT License
 *
 * Copyright (c) 2021 Prasad Parshram
+```
 See the full [licence file.]( https://github.com/prasad-psp/Android-Bluetooth-Library/blob/master/LICENSE)
 
 
