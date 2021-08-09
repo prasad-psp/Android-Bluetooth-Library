@@ -28,7 +28,7 @@ This is a Android bluetooth client server library for communication any device v
 
 ## Quick start
 Add JitPack to your root build.gradle at the end of repositories:
-```Android
+```java
 allprojects {
     repositories {
         maven { url 'https://jitpack.io' }
@@ -46,7 +46,7 @@ dependencies {
 ### Bluetooth
 
 Add this in your manifest file
-```java
+```Android
 <uses-permission android:name="android.permission.BLUETOOTH" />
 <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
