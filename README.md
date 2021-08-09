@@ -52,7 +52,7 @@ Add this in your manifest file
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 ```
 
-> For Android 6.0 and upper you will need ACCESS_FINE_LOCATION permissions to scan bluetooth devices
+> For Android 6.0 and upper you will need `ACCESS_FINE_LOCATION` permissions to scan bluetooth devices
 #### Turn on/off bluetooth
 ```java
 @Override
