@@ -53,7 +53,7 @@ Add this in your manifest file
 ```
 
 > For Android 6.0 and upper you will need ACCESS_FINE_LOCATION permissions to scan bluetooth devices
-##### Turn on/off bluetooth
+#### Turn on/off bluetooth
 ```java
 @Override
 protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +75,7 @@ protected void onCreate(Bundle savedInstanceState) {
 }
 ```
 
-##### Stop bluetooth service
+#### Stop bluetooth service
 ```java
 @Override
 protected void onStop() {
@@ -83,7 +83,7 @@ protected void onStop() {
 }
 ```
 
-##### Detect nearby bluetooth devices
+#### Detect nearby bluetooth devices
 ```java
 // Listener
 bluetooth.setOnDetectNearbyDeviceListener(new BluetoothListener.onDetectNearbyDeviceListener() {
@@ -97,7 +97,7 @@ bluetooth.setOnDetectNearbyDeviceListener(new BluetoothListener.onDetectNearbyDe
 bluetooth.startDetectNearbyDevices();
 ```
 
-##### Bluetooth device discovery 
+#### Bluetooth device discovery 
 ```java
 // Listener
 bluetooth.setOnDiscoveryStateChangedListener(new BluetoothListener.onDiscoveryStateChangedListener() {
@@ -114,7 +114,7 @@ bluetooth.setOnDiscoveryStateChangedListener(new BluetoothListener.onDiscoverySt
 });
 ```
 
-##### Pair bluetooth device and List of paired devices
+#### Pair bluetooth device and List of paired devices
 ```java
 // Listener
 bluetooth.setOnDevicePairListener(new BluetoothListener.onDevicePairListener() {
@@ -142,7 +142,7 @@ if(bluetooth.requestPairDevice(deviceAddress)) {
 ArrayList<BluetoothDevice> devices = bluetooth.getPairedDevices();
 ```
 
-##### Unpair bluetooth device (using reflaction)
+#### Unpair bluetooth device (using reflaction)
 ```java
 // bluetooth.unpairDevice(bluetoothDevice);
 // OR
@@ -164,14 +164,14 @@ protected void onCreate(Bundle savedInstanceState) {
     	connection = new Connection(this);
 }
 ```
-##### Set your own UUID for connection (Optional)
+#### Set your own UUID for connection (Optional)
 > Default UUID is 00001101-0000-1000-8000-00805F9B34FB
 ```java
 connection.setUUID(your_uuid);
 ```
 
-#### As Server
-##### Accept incoming bluetooth connection request
+### As Server
+#### Accept incoming bluetooth connection request
 ```java
 connection.accept(isSecureConnection,connectionListener, receiveListener);
 
@@ -219,8 +219,8 @@ private final BluetoothListener.onConnectionListener connectionListener = new Bl
 };
 ```
 
-#### As Client
-##### Connect bluetooth device
+### As Client
+#### Connect bluetooth device
 ```java
 // connection.connect(bluetoothDevice, isSecureConnection,connectionListener,receiveListener);
 // OR
@@ -266,7 +266,7 @@ private final BluetoothListener.onConnectionListener connectionListener = new Bl
 };
 ```
 
-##### Receive data from connected device
+#### Receive data from connected device
 ```java
 // Receive listener
 private final BluetoothListener.onReceiveListener receiveListener = new BluetoothListener.onReceiveListener() {
@@ -280,7 +280,7 @@ private final BluetoothListener.onReceiveListener receiveListener = new Bluetoot
 //connection.setOnReceiveListener(receiveListener);
 ```
 
-##### Send data to connected device
+#### Send data to connected device
 ```java
 // connection.send(b);  // byte[] b
 // connection.send(b,off,len);   //byte[] b , int off, int len
@@ -293,7 +293,7 @@ else {
 }
 ```
 
-##### Check connection status
+#### Check connection status
 ```java
 if(connection.isConnected()) {
     Log.d(TAG,"Device connected");
@@ -303,7 +303,7 @@ else {
 }
 ```
 
-##### Disconnect bluetooth connection 
+#### Disconnect bluetooth connection 
 ```java
 connection.disconnect();
 ```
@@ -311,7 +311,7 @@ connection.disconnect();
 
 ### Send Receive 
 > Note: Call SendReceive class when connection is established.
-##### Send data to connected device (using one or more classes / Activities / Fragments)
+#### Send data to connected device (using one or more classes / Activities / Fragments)
 ```java
 // SendReceive.getInstance().send(b);  //byte[] b
 // SendReceive.getInstance().send(b,off,len);  // byte[] b , int off, int len
@@ -324,7 +324,7 @@ else {
 }
 ```
 
-##### Receive data from connected device (using one or more classes / Activities / Fragments)
+#### Receive data from connected device (using one or more classes / Activities / Fragments)
 ```java
 // Receive listener
 SendReceive.getInstance().setOnReceiveListener(new BluetoothListener.onReceiveListener() {
