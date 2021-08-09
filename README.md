@@ -25,3 +25,50 @@ This is a Android bluetooth client server library for communication any device v
 - Receive data from connected device ( using one or more classes / Activities / Fragments ).
 
 
+## Quick start
+Add JitPack to your root build.gradle at the end of repositories:
+```java
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
+Add the dependency in your module build.gradle:
+```android
+dependencies {
+  implementation 'com.github.prasad-psp:Android-Bluetooth-Library:1.0.1'
+}
+```
+
+### Bluetooth
+Add this in your manifest file
+```android
+<uses-permission android:name="android.permission.BLUETOOTH" />
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+```
+
+> For Android 6.0 and upper you will need  'ACCESS_FINE_LOCATION' permissions to scan bluetooth devices
+#### Turn on/off bluetooth
+```android
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+
+ 	// Initialize bluetooth 
+	bluetooth = new Bluetooth(this);
+	
+	// Turn on bluetooth with user permission 
+	/* if you want to check user allow or denied bluetooth turn on 	
+       request add override method onActivityResult and request code is 	Bluetooth.BLUETOOTH_ENABLE_REQUEST */
+	bluetooth.turnOnWithPermission(this);
+
+	// Turn on bluetooth without user permission
+	// bluetooth.turnOnWithoutPermission();
+
+	// Turn off bluetooth
+	bluetooth.turnOff();
+}
+```
