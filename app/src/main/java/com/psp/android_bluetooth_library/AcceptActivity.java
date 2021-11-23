@@ -36,7 +36,7 @@ public class AcceptActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if(connection.isConnected()) {
-            logMsg("initialize receive listner");
+            logMsg("initialize receive listener");
             connection.setOnReceiveListener(receiveListener);
         }
     }
@@ -44,8 +44,8 @@ public class AcceptActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        disconnect();
         logMsg("onDestroy");
+        disconnect();
     }
 
     @Override
