@@ -28,7 +28,7 @@ import java.util.ArrayList;
  */
 public class BluetoothActivity extends AppCompatActivity {
 
-    private static final String TAG = "psp.Bluetooth";
+    private static final String TAG = "psp.BluetoothAct";
 
     // UI
     Button btnTurnOn,btnTurnOff,btnScan;
