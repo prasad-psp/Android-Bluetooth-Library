@@ -132,17 +132,15 @@ public class Connection {
     public boolean connect(String deviceAddress,boolean isSecureConnection, BluetoothListener.onConnectionListener connectionListener,
                            BluetoothListener.onReceiveListener receiveListener) {
         boolean isSuccess = false;
-        if(acceptThread == null) {
-            if(connectThread == null) {
-                // initialize bluetooth connection listener for receiving bluetooth connection state
-                this.connectionListener = connectionListener;
-                this.connectionListener.onConnectionStateChanged(null, CONNECTING);
+        if(acceptThread == null && connectThread == null) {
+            // initialize bluetooth connection listener for receiving bluetooth connection state
+            this.connectionListener = connectionListener;
+            this.connectionListener.onConnectionStateChanged(null, CONNECTING);
 
-                // initialize connect thread and start thread
-                connectThread = new ConnectThread(deviceAddress,isSecureConnection,this.connectionListener, receiveListener);
-                connectThread.start();
-                isSuccess = true;
-            }
+            // initialize connect thread and start thread
+            connectThread = new ConnectThread(deviceAddress,isSecureConnection,this.connectionListener, receiveListener);
+            connectThread.start();
+            isSuccess = true;
         }
         return isSuccess;
     }
@@ -176,17 +174,15 @@ public class Connection {
     public boolean accept(boolean isSecureConnection, BluetoothListener.onConnectionListener connectionListener,
                           BluetoothListener.onReceiveListener receiveListener) {
         boolean isSuccess = false;
-        if(connectThread == null) {
-            if(acceptThread == null) {
-                // Initialize bluetooth connection listener for receiving bluetooth connection state
-                this.connectionListener = connectionListener;
-                this.connectionListener.onConnectionStateChanged(null, START_LISTENING);
+        if(connectThread == null && acceptThread == null) {
+            // Initialize bluetooth connection listener for receiving bluetooth connection state
+            this.connectionListener = connectionListener;
+            this.connectionListener.onConnectionStateChanged(null, START_LISTENING);
 
-                // Initialize accept thread and start thread
-                acceptThread = new AcceptThread(isSecureConnection,this.connectionListener, receiveListener);
-                acceptThread.start();
-                isSuccess = true;
-            }
+            // Initialize accept thread and start thread
+            acceptThread = new AcceptThread(isSecureConnection,this.connectionListener, receiveListener);
+            acceptThread.start();
+            isSuccess = true;
         }
         return isSuccess;
     }
@@ -282,12 +278,10 @@ public class Connection {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                if (context != null) {
-                    if (!isRegister) {
-                        IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED);
-                        context.registerReceiver(myReceiver, intentFilter);
-                        isRegister = true;
-                    }
+                if (context != null && !isRegister) {
+                    IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED);
+                    context.registerReceiver(myReceiver, intentFilter);
+                    isRegister = true;
                 }
             }
         });
@@ -295,11 +289,9 @@ public class Connection {
 
     // unregister broadcast receiver
     private void unRegisterBroadcastReceiver() {
-        if(context != null) {
-            if (isRegister) {
-                context.unregisterReceiver(myReceiver);
-                isRegister = false;
-            }
+        if(context != null && isRegister) {
+            context.unregisterReceiver(myReceiver);
+            isRegister = false;
         }
     }
 
@@ -307,15 +299,11 @@ public class Connection {
     private final BroadcastReceiver myReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction() != null) {
-                String action = intent.getAction();
+            String action = intent.getAction();
 
-                if(!action.equals("")) {
-                    if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
-                        if(connectionListener != null) {
-                            connectionListener.onConnectionStateChanged(null,DISCONNECTED); // Send data to listener
-                        }
-                    }
+            if(action != null && !action.equals("") && action.equals(BluetoothDevice.ACTION_ACL_DISCONNECTED)) {
+                if(connectionListener != null) {
+                    connectionListener.onConnectionStateChanged(null,DISCONNECTED); // Send data to listener
                 }
             }
         }
