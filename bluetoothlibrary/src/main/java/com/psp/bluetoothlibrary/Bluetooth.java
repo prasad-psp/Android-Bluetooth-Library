@@ -170,13 +170,9 @@ public class Bluetooth {
      * @param activity Activity used to display the dialog.
      */
     public void turnOnWithPermission(AppCompatActivity activity) {
-        if(btAdapter != null) {
-            if(!btAdapter.isEnabled()) {
-                if (activity != null) {
-                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                    activity.startActivityForResult(enableBtIntent, BLUETOOTH_ENABLE_REQUEST);
-                }
-            }
+        if(btAdapter != null && !btAdapter.isEnabled() && activity != null) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            activity.startActivityForResult(enableBtIntent, BLUETOOTH_ENABLE_REQUEST);
         }
     }
 
@@ -185,13 +181,9 @@ public class Bluetooth {
      * @param activity Fragment activity used to display the dialog.
      */
     public void turnOnWithPermission(FragmentActivity activity) {
-        if(btAdapter != null) {
-            if(!btAdapter.isEnabled()) {
-                if (activity != null) {
-                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                    activity.startActivityForResult(enableBtIntent, BLUETOOTH_ENABLE_REQUEST);
-                }
-            }
+        if(btAdapter != null && !btAdapter.isEnabled() && activity != null) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            activity.startActivityForResult(enableBtIntent, BLUETOOTH_ENABLE_REQUEST);
         }
     }
 
@@ -199,10 +191,8 @@ public class Bluetooth {
      * Enable bluetooth without user permission.
      */
     public void turnOnWithoutPermission() {
-        if(btAdapter != null) {
-            if(!btAdapter.isEnabled()) {
-                btAdapter.enable();
-            }
+        if(btAdapter != null && !btAdapter.isEnabled()) {
+            btAdapter.enable();
         }
     }
 
@@ -210,10 +200,8 @@ public class Bluetooth {
      * Disable bluetooth without user permission.
      */
     public void turnOff() {
-        if(btAdapter != null) {
-            if(btAdapter.isEnabled()) {
-                btAdapter.disable();
-            }
+        if(btAdapter != null && btAdapter.isEnabled()) {
+            btAdapter.disable();
         }
     }
 
@@ -274,17 +262,15 @@ public class Bluetooth {
      */
     public boolean requestPairDevice(BluetoothDevice device) {
         boolean isSuccess = false;
-        if(isBluetoothSupported) {
-            if (device != null) {
-                try {
-                    isSuccess = device.createBond();
-                    if(isSuccess) {
-                        registerPairingBroadcast(true);
-                    }
+        if(isBluetoothSupported && device != null) {
+            try {
+                isSuccess = device.createBond();
+                if(isSuccess) {
+                    registerPairingBroadcast(true);
                 }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
             }
         }
         return isSuccess;
@@ -321,19 +307,17 @@ public class Bluetooth {
      */
     public boolean unpairDevice(BluetoothDevice device) {
         boolean isSuccess = false;
-        if(isBluetoothSupported) {
-            if (device != null) {
-                try {
-                    // Bluetooth Remove Bond
-                    Method m = device.getClass()
-                            .getMethod("removeBond", (Class[]) null);
-                    m.invoke(device, (Object[]) null);
-                    isSuccess = true;
-                }
-                catch (Exception e) {
-                    isSuccess = false;
-                    e.printStackTrace();
-                }
+        if(isBluetoothSupported && device != null) {
+            try {
+                // Bluetooth Remove Bond
+                Method m = device.getClass()
+                        .getMethod("removeBond", (Class[]) null);
+                m.invoke(device, (Object[]) null);
+                isSuccess = true;
+            }
+            catch (Exception e) {
+                isSuccess = false;
+                e.printStackTrace();
             }
         }
         return isSuccess;
@@ -442,28 +426,27 @@ public class Bluetooth {
     private final BroadcastReceiver pairBroadcast = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction() != null) {
-                String action = intent.getAction();
 
-                if(action.equals(BluetoothDevice.ACTION_BOND_STATE_CHANGED)) {
-                    final BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                    final int state = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.ERROR);
-                    final int prevState = intent.getIntExtra(BluetoothDevice.EXTRA_PREVIOUS_BOND_STATE, BluetoothDevice.ERROR);
+            String action = intent.getAction();
+            if(action != null && !action.equals("") && action.equals(BluetoothDevice.ACTION_BOND_STATE_CHANGED)) {
 
-                    if (state == BluetoothDevice.BOND_BONDED && prevState == BluetoothDevice.BOND_BONDING) {
-                        registerPairingBroadcast(false);
-                        //Device paired successfully
-                        if(onDevicePairListener != null) {
-                            onDevicePairListener.onDevicePaired(device);
-                        }
+                final BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                final int state = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.ERROR);
+                final int prevState = intent.getIntExtra(BluetoothDevice.EXTRA_PREVIOUS_BOND_STATE, BluetoothDevice.ERROR);
+
+                if (state == BluetoothDevice.BOND_BONDED && prevState == BluetoothDevice.BOND_BONDING) {
+                    registerPairingBroadcast(false);
+                    //Device paired successfully
+                    if(onDevicePairListener != null) {
+                        onDevicePairListener.onDevicePaired(device);
                     }
+                }
 
-                    if (state == BluetoothDevice.BOND_NONE && prevState == BluetoothDevice.BOND_BONDING) {
-                        registerPairingBroadcast(false);
-                        //Device paired cancelled
-                        if(onDevicePairListener != null) {
-                            onDevicePairListener.onCancelled(device);
-                        }
+                if (state == BluetoothDevice.BOND_NONE && prevState == BluetoothDevice.BOND_BONDING) {
+                    registerPairingBroadcast(false);
+                    //Device paired cancelled
+                    if(onDevicePairListener != null) {
+                        onDevicePairListener.onCancelled(device);
                     }
                 }
             }
@@ -475,8 +458,9 @@ public class Bluetooth {
     private final BroadcastReceiver discoveryBroadcast = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction() != null) {
-                String action = intent.getAction();
+
+            String action = intent.getAction();
+            if(action != null && !action.equals("")) {
 
                 if(action.equals(BluetoothDevice.ACTION_FOUND)) {
                     //Device found
