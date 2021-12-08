@@ -53,6 +53,9 @@ public class Connection {
     //This boolean value is used for check device is connected or not
     private boolean isConnected = false;
 
+    // This boolean value is used for check bluetooth connect timeout is enabled or not
+    private boolean isEnabledConnectTimeout = false;
+
     // Connection Results Constant Values
     public static final int CONNECTING = 101; // Connect Thread
     public static final int CONNECTED = 102;  // Connect Thread & Accept Thread
@@ -66,6 +69,9 @@ public class Connection {
     // Accept Thread Connection Error Results Constant Values
     public static final int ACCEPT_FAILED = 301;
     public static final int SERVER_SOCKET_NOT_FOUND = 302;
+
+    // 35 sec Default bluetooth connect timeout
+    private long connectTimeout = 35*1000;
 
 
     /**
@@ -91,6 +97,26 @@ public class Connection {
                 BTMODULEUUID = uuid;
             }
         }
+    }
+
+    public void enableConnectTimeout() {
+        isEnabledConnectTimeout = true;
+    }
+
+    public void disableConnectTimeout() {
+        isEnabledConnectTimeout = false;
+    }
+
+    public boolean isEnabledConnectTimeout() {
+        return isEnabledConnectTimeout;
+    }
+
+    public void setConnectTimeout(long timeoutMillis) {
+        this.connectTimeout = timeoutMillis;
+    }
+
+    public long getConnectTimeout() {
+        return this.connectTimeout;
     }
 
     /**
@@ -340,6 +366,7 @@ public class Connection {
         private BluetoothAdapter btAdapter = null;
         private BluetoothListener.onConnectionListener connectionListenerT = null;
         private BluetoothListener.onReceiveListener receiveListenerT = null;
+        private final Handler timeoutHandler = new Handler(Looper.getMainLooper()); // connection timeout handler
 
         public ConnectThread(String deviceAddress, boolean isSecureConnection, BluetoothListener.onConnectionListener connectionListenerT,
                              BluetoothListener.onReceiveListener receiveListenerT) {
@@ -390,9 +417,13 @@ public class Connection {
                     // Cancel discovery because it otherwise slows down the connection.
                     btAdapter.cancelDiscovery();
 
+                    addConnectionTimeout();
+
                     // Connect to the remote device through the socket.
                     // This call blocks until it succeeds or throws an exception.
                     mSocket.connect();
+
+                    removeConnectionTimeout();
 
                     // The connection attempt succeeded.
                     isConnected = true;
@@ -408,6 +439,7 @@ public class Connection {
                     // if socket throws an exception then message will be send to connection failed listener [CONNECT_FAILED]
                     setConnectionFailedListenerResult(this.connectionListenerT, CONNECT_FAILED);
                     isConnected = false;
+                    removeConnectionTimeout();
                 }
             }
             else {
@@ -447,11 +479,37 @@ public class Connection {
 
         // This method is used to stop bluetooth connection
         private void cancel() {
+            removeConnectionTimeout();
             deAttachListener();
             SendReceive.getInstance().stop(); // stop send receive
             closeSocket();
             isConnected = false;
         }
+
+        private void addConnectionTimeout() {
+            if(isEnabledConnectTimeout) {
+                timeoutHandler.postDelayed(timeoutRunnable, connectTimeout);
+            }
+        }
+
+        private void removeConnectionTimeout() {
+            timeoutHandler.removeCallbacks(timeoutRunnable);
+        }
+
+        private final Runnable timeoutRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if(mSocket != null) {
+                    if(!mSocket.isConnected()) {
+                        try {
+                            mSocket.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        };
     }
 
 
