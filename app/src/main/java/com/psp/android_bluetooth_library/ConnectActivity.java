@@ -45,7 +45,7 @@ public class ConnectActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if(connection.isConnected()) {
-            logMsg("intialize receive listner");
+            logMsg("initialize receive listener");
             connection.setOnReceiveListener(receiveListener);
         }
         logMsg("onStart");
@@ -64,12 +64,21 @@ public class ConnectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_connect);
         init();
 
-        // intialize connection object
+        // initialize connection object
         logMsg("initialize connection object");
         connection = new Connection(this);
 
         // set UUID ( optional )
         // connection.setUUID(your_uuid);
+
+        // ( optional ) *New feature
+//        connection.setConnectTimeout(30*1000); // 30 sec connect timeout
+        logMsg("Get connect timeout "+connection.getConnectTimeout());
+
+        // ( optional ) *New feature
+//        connection.enableConnectTimeout();
+        logMsg("Is enable connect timeout "+connection.isEnabledConnectTimeout());
+
 
         // Connect
         btnConnect.setOnClickListener(new View.OnClickListener() {
