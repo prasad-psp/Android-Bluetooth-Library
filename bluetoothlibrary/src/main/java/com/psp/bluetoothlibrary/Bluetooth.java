@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
+import android.os.Looper;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import java.lang.reflect.Method;
@@ -64,7 +66,7 @@ public class Bluetooth {
      */
     public Bluetooth(Context context) {
         this.context = context;
-        handler = new Handler();
+        handler = new Handler(Looper.getMainLooper());
         getAdapter();
     }
 
