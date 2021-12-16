@@ -1,13 +1,4 @@
-package com.psp.bluetoothlibrary;
-
-import android.bluetooth.BluetoothSocket;
-import android.os.Handler;
-import android.os.Looper;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-/**
+/*
  * MIT License
  *
  * Copyright (c) 2021 Prasad Parshram
@@ -29,6 +20,21 @@ import java.io.OutputStream;
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
+ */
+
+package com.psp.bluetoothlibrary;
+
+import android.bluetooth.BluetoothSocket;
+import android.os.Handler;
+import android.os.Looper;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+/**
+ * SendReceive class provides the following features:
+ * <p>- Send data to connected device (using one or more classes or Activities or Fragments).
+ * <p>- Receive data from connected device (using one or more classes or Activities or Fragments).
  */
 public class SendReceive {
 
