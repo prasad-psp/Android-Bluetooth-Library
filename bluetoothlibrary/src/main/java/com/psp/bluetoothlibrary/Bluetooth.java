@@ -1,21 +1,4 @@
-package com.psp.bluetoothlibrary;
-
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Handler;
-import android.os.Looper;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Set;
-
-/**
+/*
  * MIT License
  *
  * Copyright (c) 2021 Prasad Parshram
@@ -37,6 +20,32 @@ import java.util.Set;
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
+ */
+
+package com.psp.bluetoothlibrary;
+
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Handler;
+import android.os.Looper;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Set;
+
+/**
+ * Bluetooth class provides the following features :
+ * <p>- Turn on/ off bluetooth.
+ * <p>- Detect nearby bluetooth devices.
+ * <p>- Get bluetooth discovery started or finished.
+ * <p>- Pair bluetooth device and list of paired devices.
+ * <p>- Unpair bluetooth device (using reflection).
  */
 public class Bluetooth {
 
