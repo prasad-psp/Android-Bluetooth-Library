@@ -36,7 +36,7 @@ public class SendReceive {
     private SendReceiveThread sendReceiveThread; // SendReceived Thread
 
 
-    //Static method is used to intitialize this class at one time
+    // Static method is used to initialize this class at one time
     public static synchronized SendReceive getInstance() {
         if(instance == null) {
             instance = new SendReceive();
@@ -44,7 +44,7 @@ public class SendReceive {
         return instance;
     }
 
-    // start sendReceive thread
+    /*package*/ // start sendReceive thread
     protected void start(BluetoothSocket socket, BluetoothListener.onReceiveListener receiveListener) {
         if(sendReceiveThread == null) {
             sendReceiveThread = new SendReceiveThread(socket);
@@ -53,7 +53,7 @@ public class SendReceive {
         }
     }
 
-    // stop sendReceive thread
+    /*package*/ // stop sendReceive thread
     protected void stop() {
         if(sendReceiveThread != null) {
             sendReceiveThread.cancel();
