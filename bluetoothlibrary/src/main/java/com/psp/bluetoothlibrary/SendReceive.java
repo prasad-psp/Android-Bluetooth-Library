@@ -33,8 +33,8 @@ import java.io.OutputStream;
 
 /**
  * SendReceive class provides the following features:
- * <p>- Send data to connected device (using one or more classes or Activities or Fragments).
- * <p>- Receive data from connected device (using one or more classes or Activities or Fragments).
+ * <p>- Send data to connected device (using one or more Classes / Activities / Fragments).
+ * <p>- Receive data from connected device (using one or more Classes / Activities / Fragments).
  */
 public class SendReceive {
 
