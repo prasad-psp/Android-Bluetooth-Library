@@ -1,19 +1,4 @@
-package com.psp.bluetoothlibrary;
-
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothServerSocket;
-import android.bluetooth.BluetoothSocket;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Handler;
-import android.os.Looper;
-import java.io.IOException;
-import java.util.UUID;
-
-/**
+/*
  * MIT License
  *
  * Copyright (c) 2021 Prasad Parshram
@@ -36,11 +21,41 @@ import java.util.UUID;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+package com.psp.bluetoothlibrary;
+
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothServerSocket;
+import android.bluetooth.BluetoothSocket;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Handler;
+import android.os.Looper;
+import java.io.IOException;
+import java.util.UUID;
+
+/**
+ * Connection class provides the following features :
+ * <p>- Set your own UUID for connection.
+ * <p>- Accept incoming bluetooth connection request.
+ * <p>- Connect bluetooth device.
+ * <p>- Connect timeout.
+ * <p>- Received data from connected device.
+ * <p>- Send data to connected device.
+ * <p>- Check connection status.
+ * <p>- Disconnect bluetooth connection.
+ */
 public class Connection {
 
-    private UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); // Default UUID
+    /**
+     * Default uuid for connection.
+     */
+    private UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
-    private ConnectThread connectThread = null; //Connect Thread
+    private ConnectThread connectThread = null; // Connect Thread
     private AcceptThread acceptThread = null;  // Accept Thread
 
     private BluetoothListener.onConnectionListener connectionListener = null; // Connection listener
@@ -56,21 +71,50 @@ public class Connection {
     // This boolean value is used for check bluetooth connect timeout is enabled or not
     private boolean isEnabledConnectTimeout = false;
 
-    // Connection Results Constant Values
-    public static final int CONNECTING = 101; // Connect Thread
-    public static final int CONNECTED = 102;  // Connect Thread & Accept Thread
-    public static final int DISCONNECTED = 103; // Connect Thread & Accept Thread
-    public static final int START_LISTENING = 104; // Accept Thread
+    /**
+     * It indicates that bluetooth device is getting connected.
+     */
+    public static final int CONNECTING = 101;
 
-    // Connect Thread Connection Error Results Constant Values
+    /**
+     * It indicates bluetooth device connected.
+     */
+    public static final int CONNECTED = 102;
+
+    /**
+     * It indicates bluetooth device disconnected.
+     */
+    public static final int DISCONNECTED = 103;
+
+    /**
+     * It indicates the bluetooth device incoming connection accept process is been started.
+     */
+    public static final int START_LISTENING = 104;
+
+    /**
+     * It indicates bluetooth device connect process failed.
+     */
     public static final int CONNECT_FAILED = 201;
+
+    /**
+     * It indicates bluetooth socket not found.
+     */
     public static final int SOCKET_NOT_FOUND = 202;
 
-    // Accept Thread Connection Error Results Constant Values
+    /**
+     * It indicates bluetooth device incoming connection accept process failed.
+     */
     public static final int ACCEPT_FAILED = 301;
+
+    /**
+     * It indicates bluetooth server socket not found.
+     */
     public static final int SERVER_SOCKET_NOT_FOUND = 302;
 
-    // 35 sec Default bluetooth connect timeout
+    /**
+     * The default connect timeout for bluetooth connection is 35 sec.
+     * This timeout can also be changed by using {@link #setConnectTimeout} method.
+     */
     private long connectTimeout = 35*1000;
 
 
@@ -83,8 +127,7 @@ public class Connection {
     }
 
     /**
-     * Set your own uuid for connection.
-     * Note: this method to be used before connect method.
+     * Set your own uuid for connection. Default UUID is {@link #BTMODULEUUID}
      * @param uuid UUID to be set
      */
     public void setUUID(UUID uuid) {
@@ -99,30 +142,51 @@ public class Connection {
         }
     }
 
+    /**
+     * It switch on connect timeout feature.
+     */
     public void enableConnectTimeout() {
         isEnabledConnectTimeout = true;
     }
 
+    /**
+     * It switches off connect timeout feature.
+     */
     public void disableConnectTimeout() {
         isEnabledConnectTimeout = false;
     }
 
+    /**
+     * Return true if Bluetooth connect timeout feature is currently enabled.
+     * @return true if connect timeout is enabled
+     */
     public boolean isEnabledConnectTimeout() {
         return isEnabledConnectTimeout;
     }
 
+    /**
+     * For bluetooth connection set connect timeout.
+     * When connect timeout is over bluetooth connection gets disconnected and {@link #CONNECT_FAILED} gets transmitted.
+     * <p>Default connect timeout is {@link #connectTimeout}.
+     * @param timeoutMillis the connect timeout delay(in milliseconds)
+     */
     public void setConnectTimeout(long timeoutMillis) {
         this.connectTimeout = timeoutMillis;
     }
 
+    /**
+     * get bluetooth connect timeout
+     * @return connect timeout
+     */
     public long getConnectTimeout() {
         return this.connectTimeout;
     }
 
     /**
      *  connect method is used to connect bluetooth device using its address.
-     *	Note : this method doesn't response to either bluetooth CONNECTED or CONNECT_FAILED so uptil that dont interrupt with this method.
-     *  because bluetoothSocket.connect() - This call blocks until it succeeds or throws an exception.
+     *	<p>Note : Don't interrupt with connect method till it gives response to {@link #CONNECTED} or {@link #CONNECT_FAILED}
+     *	or {@link #SOCKET_NOT_FOUND} .
+     *	If you want to interrupt connect method you have the option to switch on connect timeout feature.
      *  @param deviceAddress - Bluetooth device mac address
      *  @param isSecureConnection - true if you want data encrypted
      *  @param connectionListener - Connection listener, you can check all the bluetooth connection state with this listener
@@ -147,8 +211,9 @@ public class Connection {
 
     /**
      *  connect method is used to connect bluetooth device.
-     *  Note : this method doesn't response to either bluetooth CONNECTED or CONNECT_FAILED so uptil that dont interrupt with this method.
-     *  because bluetoothSocket.connect() - This call blocks until it succeeds or throws an exception.
+     *  <p>Note : Don't interrupt with connect method till it gives response to {@link #CONNECTED} or {@link #CONNECT_FAILED}
+     *  or {@link #SOCKET_NOT_FOUND} .
+     *  If you want to interrupt connect method you have the option to switch on connect timeout feature.
      *  @param device - Bluetooth device
      *  @param isSecureConnection - true if you want data encrypted
      *  @param connectionListener - Connection listener, you can check all the bluetooth connection state with this listener
@@ -405,12 +470,14 @@ public class Connection {
                     // Cancel discovery because it otherwise slows down the connection.
                     btAdapter.cancelDiscovery();
 
+                    // It add's connect timeout.
                     addConnectionTimeout();
 
                     // Connect to the remote device through the socket.
                     // This call blocks until it succeeds or throws an exception.
                     mSocket.connect();
 
+                    // It removes connect timeout.
                     removeConnectionTimeout();
 
                     // The connection attempt succeeded.
@@ -427,6 +494,7 @@ public class Connection {
                     // if socket throws an exception then message will be send to connection failed listener [CONNECT_FAILED]
                     setConnectionFailedListenerResult(this.connectionListenerT, CONNECT_FAILED);
                     isConnected = false;
+                    // It removes connect timeout.
                     removeConnectionTimeout();
                 }
             }
@@ -455,7 +523,7 @@ public class Connection {
 
         private void deAttachListener() {
             if(this.connectionListenerT != null) {
-                // deAttach connectin listener
+                // deAttach connection listener
                 this.connectionListenerT = null;
             }
 
@@ -467,19 +535,21 @@ public class Connection {
 
         // This method is used to stop bluetooth connection
         private void cancel() {
-            removeConnectionTimeout();
+            removeConnectionTimeout(); // It removes connect timeout.
             deAttachListener();
             SendReceive.getInstance().stop(); // stop send receive
             closeSocket();
             isConnected = false;
         }
 
+        // It add's connect timeout
         private void addConnectionTimeout() {
             if(isEnabledConnectTimeout) {
                 timeoutHandler.postDelayed(timeoutRunnable, connectTimeout);
             }
         }
 
+        // It removes connect timeout
         private void removeConnectionTimeout() {
             timeoutHandler.removeCallbacks(timeoutRunnable);
         }
@@ -490,6 +560,7 @@ public class Connection {
                 if(mSocket != null) {
                     if(!mSocket.isConnected()) {
                         try {
+                            // close bluetooth socket
                             mSocket.close();
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -520,7 +591,7 @@ public class Connection {
                             BluetoothListener.onReceiveListener receiveListenerT) {
             this.connectionListenerT = connectionListenerT;
             this.receiveListenerT = receiveListenerT;
-            serverSocket = listenServerSocket(isSecureConnection); // Get bluetooth server socket and listning incoming connection
+            serverSocket = listenServerSocket(isSecureConnection); // Get bluetooth server socket and listening incoming connection
         }
 
         // Listen bluetooth server socket
