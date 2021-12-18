@@ -1,17 +1,18 @@
-# Android-Bluetooth-Library
-## Introduction
-This is an Android bluetooth client server library for communication any device via bluetooth with Serial Port Profile (SPP). This library allows you to easily create a socket bluetooth connection for two devices with one server and one client. **The main purpose of this library is you can establish connection in one class or Activity or Fragment and can send or receive data in multiple classes / Activities / Fragments.** This library is compatible with the Android SDK 4.4 W to 11.
-  
+# Android-Bluetooth-Library 
+[![Licence MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](https://github.com/prasad-psp/Android-Bluetooth-Library/blob/master/LICENSE) [![](https://jitpack.io/v/prasad-psp/Android-Bluetooth-Library.svg)](https://jitpack.io/#prasad-psp/Android-Bluetooth-Library) 
+
+This is an Android bluetooth client server library for communication any device via bluetooth with Serial Port Profile (SPP). This library allows you to easily create a socket bluetooth connection for two devices with one server and one client. **The main purpose of this library is you can establish connection in one Class or Activity or Fragment and can send or receive data in multiple Classes / Activities / Fragments.** This library is compatible with the Android SDK 4.4 W to 11.
+
   
 ## Features
-**Bluetooth** class provides the following features :
+[**Bluetooth**](#bluetooth) class provides the following features :
 - Turn on/ off bluetooth.
 - Detect nearby bluetooth devices. 
 - Get bluetooth discovery started or finished.
 - Pair bluetooth device and list of paired devices.
-- Unpair bluetooth device (using reflaction).
+- Unpair bluetooth device (using reflection).
 
-**Connection** class provides the following features :
+[**Connection**](#connection) class provides the following features :
 - Set your own UUID for connection.
 - Accept incoming bluetooth connection request.
 - Connect bluetooth device.
@@ -20,11 +21,28 @@ This is an Android bluetooth client server library for communication any device 
 - Check connection status.
 - Disconnect bluetooth connection.
 
-**SendReceive** class provides the following features:
-- Send data to connected device (using one or more classes / Activites / Fragments).
-- Receive data from connected device (using one or more classes / Activities / Fragments).
+[**SendReceive**](#send-receive) class provides the following features:
+- Send data to connected device (using one or more Classes / Activities / Fragments).
+- Receive data from connected device (using one or more Classes / Activities / Fragments).
 
 
+### Version 0.2
+New feature added in Connection class
+- Connect timeout
+
+#### Enable and disable connect timeout
+```java
+// Enable
+connection.enableConnectTimeout();
+// Disable
+connection.disableConnectTimeout();
+```
+
+#### Set your own connect timeout (Optional)
+> Default connect timeout is 35 sec.
+```java
+connection.setConnectTimeout(timeoutMillis);
+```
 
 ## Quick start
 Add JitPack to your root build.gradle at the end of repositories:
@@ -39,7 +57,7 @@ allprojects {
 Add the dependency in your module build.gradle:
 ```java
 dependencies {
-  implementation 'com.github.prasad-psp:Android-Bluetooth-Library:1.0.1'
+  implementation 'com.github.prasad-psp:Android-Bluetooth-Library:1.0.2'
 }
 ```
 
@@ -311,7 +329,7 @@ connection.disconnect();
 
 ### Send Receive 
 > Note: Call SendReceive class when connection is established.
-#### Send data to connected device (using one or more classes / Activities / Fragments)
+#### Send data to connected device (using one or more Classes / Activities / Fragments)
 ```java
 // SendReceive.getInstance().send(b);  //byte[] b
 // SendReceive.getInstance().send(b,off,len);  // byte[] b , int off, int len
@@ -324,7 +342,7 @@ else {
 }
 ```
 
-#### Receive data from connected device (using one or more classes / Activities / Fragments)
+#### Receive data from connected device (using one or more Classes / Activities / Fragments)
 ```java
 // Receive listener
 SendReceive.getInstance().setOnReceiveListener(new BluetoothListener.onReceiveListener() {
@@ -349,5 +367,3 @@ See the full [licence file.]( https://github.com/prasad-psp/Android-Bluetooth-Li
 
 ## Feedback
 If you have any feedback, please reach out to us at prasad.parshram123@gmail.com
-
-
