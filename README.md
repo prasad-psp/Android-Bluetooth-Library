@@ -1,10 +1,12 @@
 # Android-Bluetooth-Library 
 [![Licence MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](https://github.com/prasad-psp/Android-Bluetooth-Library/blob/master/LICENSE) [![](https://jitpack.io/v/prasad-psp/Android-Bluetooth-Library.svg)](https://jitpack.io/#prasad-psp/Android-Bluetooth-Library) 
 
-This is an Android bluetooth client server library for communication any device via bluetooth with Serial Port Profile (SPP). This library allows you to easily create a socket bluetooth connection for two devices with one server and one client. **The main purpose of this library is you can establish connection in one Class or Activity or Fragment and can send or receive data in multiple Classes / Activities / Fragments.** This library is compatible with the Android SDK 4.4 W to 11.
+This is an Android bluetooth client server library for communication any device via bluetooth with Serial Port Profile (SPP). This library allows you to easily create a socket bluetooth connection for two devices with one server and one client. **The main purpose of this library is you can establish connection in one Class or Activity or Fragment and can send or receive data in multiple Classes / Activities / Fragments.** This library is compatible with the Android SDK 4.4 W to up.
 
   
 ## Features
+[**Support Android 12**](#Permissions)
+
 [**Bluetooth**](#bluetooth) class provides the following features :
 - Turn on/ off bluetooth.
 - Detect nearby bluetooth devices. 
@@ -61,16 +63,34 @@ dependencies {
 }
 ```
 
-### Bluetooth
+### Permissions
+> Target Android 12 or higher
+```xml
+<uses-permission
+        android:name="android.permission.BLUETOOTH"
+        android:maxSdkVersion="30" />
+<uses-permission
+        android:name="android.permission.BLUETOOTH_ADMIN"
+        android:maxSdkVersion="30" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"
+        android:maxSdkVersion="30" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"
+        android:maxSdkVersion="30" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+<uses-permission android:name="android.permission.BLUETOOTH_SCAN"
+        android:usesPermissionFlags="neverForLocation"
+        tools:targetApi="s" />
+```
 
-Add this in your manifest file
+> Target Android 11 or lower
 ```xml
 <uses-permission android:name="android.permission.BLUETOOTH" />
 <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 ```
+Read more [Android Bluetooth Permissions](https://developer.android.com/guide/topics/connectivity/bluetooth/permissions).
 
-> For Android 6.0 and upper you will need `ACCESS_FINE_LOCATION` permissions to scan bluetooth devices
+### Bluetooth
 #### Turn on/off bluetooth
 ```java
 @Override
