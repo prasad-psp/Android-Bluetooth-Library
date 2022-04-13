@@ -3,6 +3,14 @@
 
 This is an Android bluetooth client server library for communication any device via bluetooth with Serial Port Profile (SPP). This library allows you to easily create a socket bluetooth connection for two devices with one server and one client. **The main purpose of this library is you can establish connection in one Class or Activity or Fragment and can send or receive data in multiple Classes / Activities / Fragments.** This library is compatible with the Android SDK 4.4 W to up.
 
+&nbsp;
+
+<p align="start">
+<img src="https://cdn.rawgit.com/steverichey/google-play-badge-svg/master/img/fr_get.svg" width="8%">
+</p>
+
+[Bluetooth Classic](https://play.google.com/store/apps/details?id=com.psp.bluetoothclassic) app uses **Android-Bluetooth-Library**.
+
   
 ## Features
 [**Support Android 12**](#Permissions)
