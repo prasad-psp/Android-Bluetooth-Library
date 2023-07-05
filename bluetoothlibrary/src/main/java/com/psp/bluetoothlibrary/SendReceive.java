@@ -155,7 +155,7 @@ public class SendReceive {
             while (true) {
                 try {
                     bytes = mmInStream.read(buffer);            //read bytes from input buffer
-                    String readMessage = new String(buffer, 0, bytes);
+                    String readMessage = new String(buffer, 0, bytes,"ISO-8859-1");
                     setReceivedListenerResult(readMessage);     // send data to receive listener
                 }
                 catch (IOException e) {
@@ -166,9 +166,8 @@ public class SendReceive {
 
         // write method String
         public boolean write(String input) {
-            byte[] msgBuffer = input.getBytes();   //converts entered String into bytes
-
             try {
+                byte[] msgBuffer = input.getBytes("ISO-8859-1");   //converts entered String into bytes
                 mmOutStream.write(msgBuffer);
                 return true;
             }
