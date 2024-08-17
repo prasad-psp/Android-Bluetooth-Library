@@ -45,17 +45,17 @@ public class SendReceiveActivity extends AppCompatActivity {
 
             @Override
             public void onReceived(String receivedData, byte[] receivedDataInBytes) {
-//            byte[] filteredBytes = HexUtils.filterNonZeroBytes(receivedDataInBytes);
-//            String displayMsg = HexUtils.convertBytesToFormattedHex(filteredBytes);
-//            logMsg("[RX] "+displayMsg);
-//            txtDisplay.append("\n[RX] "+displayMsg);
-//            setDisplayMessageScrollBottom();
+            byte[] filteredBytes = HexUtils.filterNonZeroBytes(receivedDataInBytes);
+            String displayMsg = HexUtils.convertBytesToFormattedHex(filteredBytes);
+            logMsg("[RX] "+displayMsg);
+            txtDisplay.append("\n[RX] "+displayMsg);
+            setDisplayMessageScrollBottom();
 
                 // OR
 
-                logMsg("[RX] "+receivedData);
-                txtDisplay.append("\n[RX] "+receivedData);
-                setDisplayMessageScrollBottom();
+//                logMsg("[RX] "+receivedData);
+//                txtDisplay.append("\n[RX] "+receivedData);
+//                setDisplayMessageScrollBottom();
             }
         });
 

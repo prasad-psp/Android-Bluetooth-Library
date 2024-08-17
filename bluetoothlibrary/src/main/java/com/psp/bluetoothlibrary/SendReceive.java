@@ -154,10 +154,14 @@ public class SendReceive {
             // Keep looping to listen received data
             while (true) {
                 try {
-                    bytes = mmInStream.read(buffer);            //read bytes from input buffer
-                    String readMessage = new String(buffer, 0, bytes);
-                    setReceivedListenerResult(readMessage);
-                    setReceivedListenerResult(readMessage, buffer);// send data to receive listener
+                    bytes = mmInStream.read(buffer);
+                    if (bytes > 0) {
+                        byte[] newData = new byte[bytes];
+                        System.arraycopy(buffer, 0, newData, 0, bytes);//read bytes from input buffer
+                        String readMessage = new String(buffer, 0, bytes);
+                        setReceivedListenerResult(readMessage);
+                        setReceivedListenerResult(readMessage, newData);// send data to receive listener
+                    }
                 }
                 catch (IOException e) {
                     break;
