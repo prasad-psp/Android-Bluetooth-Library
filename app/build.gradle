@@ -10,8 +10,8 @@ android {
         applicationId "com.psp.android_bluetooth_library"
         minSdkVersion 20
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0.2"
+        versionCode 4
+        versionName "1.0.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
