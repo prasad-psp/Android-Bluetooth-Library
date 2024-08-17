@@ -316,9 +316,15 @@ private final BluetoothListener.onConnectionListener connectionListener = new Bl
 ```java
 // Receive listener
 private final BluetoothListener.onReceiveListener receiveListener = new BluetoothListener.onReceiveListener() {
+    // This method is deprecated and should not be used.
     @Override
     public void onReceived(String receivedData) {
-        Log.d(TAG,receivedData); 
+    	Log.d(TAG, "onReceived: "+receivedData);
+    }
+
+    @Override
+    public void onReceived(String receivedData, byte[] receivedDataInBytes) {
+        Log.d(TAG, "onReceived: "+receivedData);
     }
 };
 
@@ -374,9 +380,15 @@ else {
 ```java
 // Receive listener
 SendReceive.getInstance().setOnReceiveListener(new BluetoothListener.onReceiveListener() {
+    // This method is deprecated and should not be used.
     @Override
     public void onReceived(String receivedData) {
-        Log.d(TAG, receivedData);
+        Log.d(TAG, "onReceived: "+receivedData);
+    }
+
+    @Override
+    public void onReceived(String receivedData, byte[] receivedDataInBytes) {
+        Log.d(TAG, "onReceived: "+receivedData);
     }
 });
 ```
