@@ -40,7 +40,13 @@ public interface BluetoothListener {
      * You can read data with this listener.
      */
     interface onReceiveListener {
+        /**
+         * This method is deprecated and should not be used.
+         * Use {@link #onReceived(String, byte[])} instead.
+         */
+        @Deprecated()
         void onReceived(String receivedData);
+        void onReceived(String receivedData, byte[] receivedDataInBytes);
     }
 
 

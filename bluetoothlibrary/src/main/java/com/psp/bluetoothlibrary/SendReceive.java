@@ -156,7 +156,8 @@ public class SendReceive {
                 try {
                     bytes = mmInStream.read(buffer);            //read bytes from input buffer
                     String readMessage = new String(buffer, 0, bytes);
-                    setReceivedListenerResult(readMessage);     // send data to receive listener
+                    setReceivedListenerResult(readMessage);
+                    setReceivedListenerResult(readMessage, buffer);// send data to receive listener
                 }
                 catch (IOException e) {
                     break;
@@ -245,6 +246,18 @@ public class SendReceive {
                 public void run() {
                     if (SendReceiveThread.this.receiveListener != null) {
                         SendReceiveThread.this.receiveListener.onReceived(receivedData);
+                    }
+                }
+            });
+        }
+
+        private void setReceivedListenerResult(String receivedData, byte[] buffer) {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    if (SendReceiveThread.this.receiveListener != null) {
+                        SendReceiveThread.this.receiveListener.onReceived(receivedData);
+                        SendReceiveThread.this.receiveListener.onReceived(receivedData, buffer);
                     }
                 }
             });

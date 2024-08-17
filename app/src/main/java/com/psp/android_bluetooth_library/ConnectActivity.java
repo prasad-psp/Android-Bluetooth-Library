@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.psp.android_bluetooth_library.utils.HexUtils;
 import com.psp.bluetoothlibrary.Bluetooth;
 import com.psp.bluetoothlibrary.BluetoothListener;
 import com.psp.bluetoothlibrary.Connection;
@@ -245,6 +246,21 @@ public class ConnectActivity extends AppCompatActivity {
     private final BluetoothListener.onReceiveListener receiveListener = new BluetoothListener.onReceiveListener() {
         @Override
         public void onReceived(String receivedData) {
+//            logMsg("[RX] "+receivedData);
+//            txtDisplay.append("\n[RX] "+receivedData);
+//            setDisplayMessageScrollBottom();
+        }
+
+        @Override
+        public void onReceived(String receivedData, byte[] receivedDataInBytes) {
+//            byte[] filteredBytes = HexUtils.filterNonZeroBytes(receivedDataInBytes);
+//            String displayMsg = HexUtils.convertBytesToFormattedHex(filteredBytes);
+//            logMsg("[RX] "+displayMsg);
+//            txtDisplay.append("\n[RX] "+displayMsg);
+//            setDisplayMessageScrollBottom();
+
+            // OR
+
             logMsg("[RX] "+receivedData);
             txtDisplay.append("\n[RX] "+receivedData);
             setDisplayMessageScrollBottom();
